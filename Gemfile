@@ -36,5 +36,9 @@ end
 gem 'rails_admin'
 gem 'cancan'
 gem "settingslogic"
-gem 'devise', '3.0.2'
+gem 'devise'
 gem "seo_helper", "~> 1.0.2"
+gem 'bootstrap-sass'
+gem 'bcrypt-ruby'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'

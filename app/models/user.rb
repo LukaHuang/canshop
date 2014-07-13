@@ -5,4 +5,16 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :groups
   has_many :products
+  has_many :group_users
+  has_many :join_group, :through => :group_users, :source => :group
+  def join!(group)
+    join_group << group
+  end
+  def quit!(group)
+    join_group.delete(group)
+  end
+  def is_member_of?(group)
+    join_group.include?(group)
+  end
+
 end

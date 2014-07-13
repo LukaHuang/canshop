@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :find_group, :except => [:show,:index]
   before_action :authenticate_user!, :except => [:show,:index]
+  before_action :member_required ,:only => [:new,:create]
   def index
     @products =Product.all
   end
@@ -41,5 +42,11 @@ class ProductsController < ApplicationController
     end
     def find_group
       @group = Group.find(params[:group_id])
+    end
+    def member_required
+      if !current_user.is_member_of?(@group)
+        flash[:warning] = "你不是這個部門的員工喔"
+        redirect_to group_path(@group)
+      end
     end
 end

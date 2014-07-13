@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :find_group, :except => [:show,:index]
+  before_action :authenticate_user!, :except => [:show,:index]
   def index
     @products =Product.all
   end
@@ -11,6 +12,7 @@ class ProductsController < ApplicationController
   end
   def create
     @product = @group.products.new(product_params)
+    @product.owner = current_user
     if @product.save
       redirect_to group_path(@group)
     else
@@ -18,10 +20,10 @@ class ProductsController < ApplicationController
     end
   end
   def edit
-    @product = @group.products.find(params[:id])
+    @product = current_user.products.find(params[:id])
   end
   def update
-    @product = @group.products.find(params[:id])
+    @product = current_user.products.find(params[:id])
     if @product.update(product_params)
       redirect_to group_path(@group)
     else
@@ -29,7 +31,7 @@ class ProductsController < ApplicationController
     end
   end
   def destroy
-    @product = @group.products.find(params[:id])
+    @product = current_user.products.find(params[:id])
     @product.destroy
     redirect_to group_path(@group)
   end

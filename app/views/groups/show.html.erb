@@ -5,8 +5,10 @@
   <div class="col-md-10 col-md-offset-1">
 
     <p><%= @group.description %></p>
+    <% if user_signed_in? %>
     <%= link_to("修改",edit_group_path(@group),:class =>"btn btn-mini btn-primary") %>
     <%= link_to("新增商品",new_group_product_path(@group),:class =>"btn btn-mini btn-primary") %>
+    <% end %>
     <table class="table table-hover">
       <thead><tr><th>商品名稱</th><th>價格</th><th>數量</th><th></th></tr></thead>
       <tbody>
@@ -15,7 +17,11 @@
             <td><%= product.name %></td>
             <td><%= product.price %></td>
             <td><%= product.number %></td>
+            <% if user_signed_in? %>
             <td><%= link_to("修改",edit_group_product_path(product.group_id,product)) %> </td>
+            <% else %>
+            <td><%= link_to("購買","#") %> </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

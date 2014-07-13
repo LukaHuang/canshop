@@ -36,9 +36,11 @@ end
 gem 'rails_admin'
 gem 'cancan'
 gem "settingslogic"
+gem "open_graph_helper"
 gem 'devise'
 gem "seo_helper", "~> 1.0.2"
 gem 'bootstrap-sass'
+gem 'holder_rails'
 gem 'bcrypt-ruby'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'

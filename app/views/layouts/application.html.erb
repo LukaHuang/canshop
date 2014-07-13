@@ -8,10 +8,16 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <meta property="og:title"       content="<%= page_title ||  SeoHelper.configuration.site_name %>"/>
+  <meta property="og:description" content="<%= page_description || SeoHelper.configuration.default_page_description %>"/>
+  <meta property="og:image:url"   content="<%= page_image ||  SeoHelper.configuration.default_page_image %>"/>
+  <%= render 'common/shim' %>
 </head>
 <body>
-
-<%= yield %>
-
+  <%= render 'common/header' %>
+  <div class="container">
+    <%= yield %>
+    <%= render 'common/footer' %>
+  </div>
 </body>
 </html>

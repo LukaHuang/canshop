@@ -35,9 +35,9 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">首頁</a></li>
-        <li> <%= link_to("貓罐頭", "#"  )%></li>
-        <li> <%= link_to("狗罐頭", "#"  )%></li>
+        <!--<li class="active"><a href="#">首頁</a></li> -->
+        <li> <%= link_to( Group.find(1).title, group_path(1)  )%></li>
+        <li> <%= link_to( Group.find(2).title, group_path(2)  )%></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">

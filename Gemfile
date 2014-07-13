@@ -44,3 +44,4 @@ gem 'holder_rails'
 gem 'bcrypt-ruby'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+gem "simple_form"

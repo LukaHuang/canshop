@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :find_group, :except => [:show,:index]
   def index
     @products =Product.all
   end
@@ -6,11 +7,9 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
   def new
-    @group = Group.find(params[:group_id])
     @product = @group.products.build
   end
   def create
-    @group = Group.find(params[:group_id])
     @product = @group.products.new(product_params)
     if @product.save
       redirect_to group_path(@group)
@@ -19,11 +18,9 @@ class ProductsController < ApplicationController
     end
   end
   def edit
-    @group = Group.find(params[:group_id])
     @product = @group.products.find(params[:id])
   end
   def update
-    @group = Group.find(params[:group_id])
     @product = @group.products.find(params[:id])
     if @product.update(product_params)
       redirect_to group_path(@group)
@@ -31,9 +28,16 @@ class ProductsController < ApplicationController
       render :edit
     end
   end
+  def destroy
+    @product = @group.products.find(params[:id])
+    @product.destroy
+    redirect_to group_path(@group)
+  end
   private
     def product_params
       params.require(:product).permit(:name,:cost,:price,:number)
     end
-  
+    def find_group
+      @group = Group.find(params[:group_id])
+    end
 end

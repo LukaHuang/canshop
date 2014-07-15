@@ -16,5 +16,14 @@ class User < ActiveRecord::Base
   def is_member_of?(group)
     join_group.include?(group)
   end
-
+  def active_for_authentication? 
+    super && approved? 
+  end
+  def inactive_message 
+    if !approved? 
+      :not_approved 
+    else 
+      super # Use whatever other message 
+    end 
+  end
 end

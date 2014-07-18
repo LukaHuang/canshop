@@ -33,11 +33,13 @@ group :production do
   gem 'rails_12factor'
 end
 
-gem 'rails_admin'
-gem 'cancan'
+
 gem "settingslogic"
 gem "open_graph_helper"
 gem 'devise'
+gem 'rolify'
+gem 'rails_admin'
+gem 'cancan'
 gem "seo_helper", "~> 1.0.2"
 gem 'bootstrap-sass'
 gem 'holder_rails'

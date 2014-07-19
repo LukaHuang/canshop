@@ -3,10 +3,24 @@ class Ability
 
   def initialize(user)
 
-    if user.has_role? :admin
+    if user.blank?  
+      cannot :manage, :all
+      basic_read_only
+    elsif user.has_role?(:admin)
+
       can :manage, :all
-    else
+    elsif user.has_role?(:staff)
+
+      can :manage, Product
       can :read, :all
+    elsif user.has_role?(:customer)
+
+      basic_read_only
+    end
+  end
+  protected
+    def basic_read_only
+        can :read, :all
     end
     # Define abilities for the passed in user here. For example:
     #
@@ -34,5 +48,4 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
-  end
 end

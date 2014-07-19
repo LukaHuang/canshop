@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  authorize_resource
   before_action :find_group, :except => [:show,:index]
   before_action :authenticate_user!, :except => [:show,:index]
   before_action :member_required ,:only => [:new,:create]

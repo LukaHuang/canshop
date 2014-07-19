@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+  authorize_resource
   before_action :authenticate_user! , :except => [:show,:index]
   def index
     @groups = Group.all

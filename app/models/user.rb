@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :products
   has_many :group_users
   has_many :join_group, :through => :group_users, :source => :group
+  
   def join!(group)
     join_group << group
   end
@@ -27,4 +28,5 @@ class User < ActiveRecord::Base
       super # Use whatever other message 
     end 
   end
+
 end

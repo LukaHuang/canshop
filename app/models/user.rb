@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :products
   has_many :group_users
   has_many :join_group, :through => :group_users, :source => :group
+  after_create :assign_default_role
+
   
   def join!(group)
     join_group << group
@@ -28,5 +30,8 @@ class User < ActiveRecord::Base
       super # Use whatever other message 
     end 
   end
-
+  def assign_default_role
+    add_role(:customer)
+    approved
+  end
 end

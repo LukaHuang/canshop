@@ -1,0 +1,17 @@
+<div class="row">
+  <h1>購物車內容</h1>
+  <div class="col-md-10 col-md-offset-1">
+
+    <table class="table">
+      <thead><tr><th>#</th><th>商品名稱</th><th>價格</th><th>數量</th></tr></thead>
+      <% @products.each do |product| %>
+        <tr>
+          <td>#</td>
+          <td><%= product.name %></td>
+          <td><%= product.price %></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

@@ -37,9 +37,30 @@ class ProductsController < ApplicationController
     @product.destroy
     redirect_to group_path(@group)
   end
+  def want
+    @product = Product.find(params[:id])
+    if !current_user.is_want?(@product)
+      current_user.want!(@product)
+    else
+      flash[:warning]= "此商品已經在購物車囉！"
+    end
+    redirect_to group_path(@group)
+  end
+  def not_like
+    @product = Product.find(params[:id])
+    if current_user.is_want?(@product)
+      current_user.not_like!(@product)
+    else
+      flash[:warning]= "此商品沒有在購物車哦！"
+    end
+    redirect_to group_path(@group)
+  end
   private
     def product_params
       params.require(:product).permit(:name,:cost,:price,:number)
+    end
+    def cart_parmas
+      params.require(:user_products).permit(:user_id,:product_id,:amount)
     end
     def find_group
       @group = Group.find(params[:group_id])

@@ -4,6 +4,14 @@ Rails.application.routes.draw do
   devise_for :users
   root :to => 'groups#index'
   resources :groups do
+    resources :products do
+      member do
+        post :want
+        post :not_like
+      end
+    end
+  end
+  namespace :account do
     resources :products
   end
   # The priority is based upon order of creation: first created -> highest priority.

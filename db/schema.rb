@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140718182604) do
+ActiveRecord::Schema.define(version: 20140719121240) do
 
   create_table "group_users", force: true do |t|
     t.integer  "group_id"
@@ -49,6 +49,14 @@ ActiveRecord::Schema.define(version: 20140718182604) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
+  create_table "user_products", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "amount",     default: 1
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                             default: "",    null: false

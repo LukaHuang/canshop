@@ -7,10 +7,9 @@ class Ability
       cannot :manage, :all
       basic_read_only
     elsif user.has_role?(:admin)
-
+      can :access, :rails_admin
       can :manage, :all
     elsif user.has_role?(:staff)
-
       can :manage, Product
       can :read, :all
     elsif user.has_role?(:customer)
@@ -21,6 +20,8 @@ class Ability
   protected
     def basic_read_only
         can :read, :all
+        can :want, Product
+        can :not_like, Product
     end
     # Define abilities for the passed in user here. For example:
     #

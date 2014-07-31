@@ -14,17 +14,30 @@
       <div class="col-sm-3">
         <%= f.input_field :price, :class =>  "form-control" %>
       </div>
+      <%= f.label "成本", :class => "col-sm-2", :for => "product_cost"  %>
+      <div class="col-sm-3">
+        <%= f.input_field :cost, :class =>  "form-control" %>
+      </div>
     </div>
     <div class="form-group">
       <%= f.label "數量", :class => "col-sm-2", :for => "product_number"  %>
       <div class="col-sm-3">
         <%= f.input_field :number, :class =>  "form-control" %>
       </div>
-    </div>
-    <div class="form-group">
-      <%= f.label "成本", :class => "col-sm-2", :for => "product_cost"  %>
+      <%= f.label "特價", :class => "col-sm-2", :for => "product_bargain"  %>
       <div class="col-sm-3">
-        <%= f.input_field :cost, :class =>  "form-control" %>
+        <%= f.input_field :bargain, :class =>  "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">    
+        <div class="checkbox">
+          <label>
+            <%= f.input :special, as: :boolean, inline_label: '精選', label: false %>
+          </label>
+        
+        </div>
       </div>
     </div>
     <div class="form-actions">

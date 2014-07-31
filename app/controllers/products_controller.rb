@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   authorize_resource
-  before_action :find_group, :except => [:show,:index]
-  before_action :authenticate_user!, :except => [:show,:index]
+  before_action :find_group, :except => [:show,:index,:bargain,:special]
+  before_action :authenticate_user!, :except => [:show,:index,:bargain,:special]
   before_action :member_required ,:only => [:new,:create]
   def index
     @products =Product.all
@@ -55,13 +55,17 @@ class ProductsController < ApplicationController
     end
     redirect_to group_path(@group)
   end
+  def bargain
+    @products=Product.where('bargain > 0')
+  end
+  def special
+    @products=Product.where('special is true')
+  end
   private
     def product_params
-      params.require(:product).permit(:name,:cost,:price,:number)
+      params.require(:product).permit(:name,:cost,:price,:number,:bargain,:special)
     end
-    def cart_parmas
-      params.require(:user_products).permit(:user_id,:product_id,:amount)
-    end
+
     def find_group
       @group = Group.find(params[:group_id])
     end

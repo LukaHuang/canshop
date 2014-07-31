@@ -9,11 +9,16 @@ class User < ActiveRecord::Base
   has_many :group_users
   has_many :join_group, :through => :group_users, :source => :group
   has_many :user_products , dependent: :destroy
-  has_many :cart, :through => :user_products, :source => :product
-
+  has_many :ca, :through => :user_products, :source => :product
   after_create :assign_default_role
+  Item = Struct.new(:name, :product_id, :price, :amount)
 
-  
+  def cart
+    sql = "select p.name, p.id,p.price, up.amount from user_products as up left join products as p on p.id = up.product_id where up.user_id = #{id}"
+    @cart ||= ActiveRecord::Base.connection.execute(sql).to_a.each_with_object([]) do |it, sum|
+      sum << Item.new(*it)
+    end
+  end 
   def join!(group)
     join_group << group
   end
@@ -24,13 +29,13 @@ class User < ActiveRecord::Base
     join_group.include?(group)
   end
   def want!(product)
-    cart << product
+    ca << product
   end
   def not_like!(product)
-    cart.delete(product)
+    ca.delete(product)
   end
   def is_want?(product)
-    cart.include?(product)
+    ca.include?(product)
   end
   def active_for_authentication? 
     super && approved? 

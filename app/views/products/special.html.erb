@@ -1,18 +1,6 @@
-
 <div class="row">
-  <h1><%= @group.title %></h1>
-
+  <h1>精選商品</h1>
   <div class="col-md-10 col-md-offset-1">
-
-    <p><%= @group.description %></p>
-    <% if current_user  %>
-      <% if @group.editable_by?(current_user) %>
-      <%= link_to("修改",edit_group_path(@group),:class =>"btn btn-mini btn-primary") %>
-      <% end %>
-      <% if current_user.is_member_of?(@group) %>
-      <%= link_to("新增商品",new_group_product_path(@group),:class =>"btn btn-mini btn-primary") %>
-      <% end %>
-    <% end %>
     <table class="table table-hover">
       <thead><tr><th>商品名稱</th><th>價格</th><th>數量</th><th></th></tr></thead>
       <tbody>
@@ -28,9 +16,6 @@
             </td>
             <td><%= product.number %></td>
             <td>
-            <% if user_signed_in? && @group.editable_by?(current_user) %>
-            <%= link_to("修改",edit_group_product_path(product.group_id,product)) %>            
-            <% end %>
             <% if user_signed_in? && current_user.is_want?(product) %>
             <%= link_to("不買這個了",not_like_group_product_path(product.group_id,product), :method => :post) %> </td>
             <% else %>

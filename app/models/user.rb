@@ -11,13 +11,10 @@ class User < ActiveRecord::Base
   has_many :user_products , dependent: :destroy
   has_many :ca, :through => :user_products, :source => :product
   after_create :assign_default_role
-  Item = Struct.new(:name, :product_id, :price, :amount)
+  Item = Struct.new(:id,:name, :product_id, :price, :amount)
 
   def cart
-    sql = "select p.name, p.id,p.price, up.amount from user_products as up left join products as p on p.id = up.product_id where up.user_id = #{id}"
-    @cart ||= ActiveRecord::Base.connection.execute(sql).to_a.each_with_object([]) do |it, sum|
-      sum << Item.new(*it)
-    end
+    self.user_products
   end 
   def join!(group)
     join_group << group

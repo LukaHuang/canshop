@@ -25,6 +25,7 @@ group :development, :test do
   gem 'rspec-rails', '2.13.1'
   gem "better_errors"
   gem "binding_of_caller"
+  gem "pry-rails"
 end
 group :test do
   gem 'selenium-webdriver', '2.35.1'
@@ -49,3 +50,4 @@ gem 'bcrypt-ruby'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem "simple_form"
+gem 'angularjs-rails'

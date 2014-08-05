@@ -1,7 +1,7 @@
 <div class="row">
   <h2>在<%= @group.title %>新增一個商品</h2>
   <div class="col-md-6 col-md-offset-3">
-    <%= simple_form_for([@group,@product], html: {class: 'form-horizontal' }) do |f| %>
+    <%= simple_form_for([@group,@prsoduct], html: {class: 'form-horizontal' }) do |f| %>
     <div class="form-group">
 
       <%= f.label "商品名稱", :class => "col-sm-2", :for => "product_name"  %>

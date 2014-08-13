@@ -51,3 +51,5 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem "simple_form"
 gem 'angularjs-rails'
+gem 'carrierwave'
+gem 'mini_magick'

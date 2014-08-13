@@ -1,7 +1,7 @@
 <div class="row">
   <h2>在<%= @group.title %>新增一個商品</h2>
   <div class="col-md-6 col-md-offset-3">
-    <%= simple_form_for([@group,@prsoduct], html: {class: 'form-horizontal' }) do |f| %>
+    <%= simple_form_for([@group,@product], html: {class: 'form-horizontal',:multipart => true }) do |f| %>
     <div class="form-group">
 
       <%= f.label "商品名稱", :class => "col-sm-2", :for => "product_name"  %>
@@ -16,6 +16,18 @@
       </div>
     </div>
     <div class="form-group">
+      <%= f.label "簡介", :class => "col-sm-2", :for => "product_snippet"  %>
+      <div class="col-sm-8">
+        <%= f.input_field :snippet, :class =>  "form-control",:row => 3 %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label "詳細說明", :class => "col-sm-2", :for => "product_description"  %>
+      <div class="col-sm-8">
+        <%= f.input_field :description, :class =>  "form-control",:row => 3 %>
+      </div>
+    </div>
+    <div class="form-group">
       <%= f.label "數量", :class => "col-sm-2", :for => "product_number"  %>
       <div class="col-sm-3">
         <%= f.input_field :number, :class =>  "form-control" %>
@@ -27,6 +39,16 @@
         <%= f.input_field :cost, :class =>  "form-control" %>
       </div>
     </div>
+    <div class="form-group">
+      <%= f.label "圖片", :class => "col-sm-2", :for => "product_photo"  %>
+      <div class="col-sm-3">
+        <%= f.file_field :photo %>
+        <%= f.hidden_field :photo_cache %>
+        <%= f.file_field "photo", type: :file, multiple: true %>
+      </div>
+    </div>
+
+    
     <div class="form-actions">
       <%= f.submit "新增", :disable_with => '處理中....', :class => "btn btn-primary btn-lg  btn-block" %>
     </div>

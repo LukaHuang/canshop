@@ -1,3 +1,14 @@
 <script>
+$(function(){
 
+  $('select').change(function(){
+    var amount=$(this).val();
+    count='#count'+$(this).attr('m');
+    
+    price='#price'+$(this).attr('m');
+    console.log(price)
+    $(count).html();
+  });
+
+});
 </script>

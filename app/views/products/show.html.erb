@@ -1,2 +1,7 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/show.html.erb</p>
+<div class="row">
+  <div class="phone-images">
+    <%=image_tag(@product.photo.url,:class =>"phone") if @product.photo? %>
+  </div>
+  <h1><%= @product.name %></h1>
+  <p><%= @product.description %></p>
+</div>

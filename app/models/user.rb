@@ -9,13 +9,8 @@ class User < ActiveRecord::Base
   has_many :group_users
   has_many :join_group, :through => :group_users, :source => :group
   has_many :user_products , dependent: :destroy
-  has_many :ca, :through => :user_products, :source => :product
+  has_many :cart, :through => :user_products, :source => :product
   after_create :assign_default_role
-  Item = Struct.new(:id,:name, :product_id, :price, :amount)
-
-  def cart
-    self.user_products
-  end 
   def join!(group)
     join_group << group
   end
@@ -26,13 +21,13 @@ class User < ActiveRecord::Base
     join_group.include?(group)
   end
   def want!(product)
-    ca << product
+    cacart << product
   end
   def not_like!(product)
-    ca.delete(product)
+    cart.delete(product)
   end
   def is_want?(product)
-    ca.include?(product)
+    cart.include?(product)
   end
   def active_for_authentication? 
     super && approved? 

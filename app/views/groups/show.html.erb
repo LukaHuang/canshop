@@ -1,44 +1,34 @@
 
-<div class="row">
-  <h1><%= @group.title %></h1>
+<div class="container-fluid">
+  <h1>
+    <%= @group.title %>
+      
+  </h1>
 
   <div class="col-md-10 col-md-offset-1">
-
-    <p><%= @group.description %></p>
-    <% if current_user  %>
-      <% if @group.editable_by?(current_user) %>
-      <%= link_to("修改",edit_group_path(@group),:class =>"btn btn-mini btn-primary") %>
-      <% end %>
-      <% if current_user.is_member_of?(@group) %>
-      <%= link_to("新增商品",new_group_product_path(@group),:class =>"btn btn-mini btn-primary") %>
-      <% end %>
-    <% end %>
-    <table class="table table-hover">
-      <thead><tr><th>商品名稱</th><th>價格</th><th>數量</th><th></th></tr></thead>
-      <tbody>
-        <% @products.each do |product| %>
-          <tr>
-            <td><%= product.name %></td>
-            <td>
-              <% if product.bargain == 0 %>
-              <%= product.price %>
-              <% else %>
-              <s><%= product.price %></s> > <strong><%= product.bargain %></strong>
-              <% end %>
-            </td>
-            <td><%= product.number %></td>
-            <td>
-            <% if user_signed_in? && @group.editable_by?(current_user) %>
-            <%= link_to("修改",edit_group_product_path(product.group_id,product)) %>            
-            <% end %>
-            <% if user_signed_in? && current_user.is_want?(product) %>
-            <%= link_to("不買這個了",not_like_group_product_path(product.group_id,product), :method => :post) %> </td>
-            <% else %>
-            <%= link_to("我想買",want_group_product_path(product.group_id,product), :method => :post) %> </td>
-            <% end %>
-          </tr>
+    <div class="pull-right ">
+      <% if current_user  %>
+        <% if current_user.is_member_of?(@group) %>
+          <%= link_to("新增商品",new_group_product_path(@group),:class =>"btn btn-xs btn-success") %>
         <% end %>
-      </tbody>
-    </table>
+        <% if @group.editable_by?(current_user) %>
+          <%= link_to("編輯",edit_group_path(@group),:class =>"btn btn-xs btn-default") %>
+        <% end %>
+      <% end %>
+    </div>
+    <ul class="phones">
+      <% @products.each do |product| %>
+      <li class="thumbnail phone-listing">
+        <%=link_to(image_tag(product.photo.thumb.url) ,group_product_path(product.group_id,product),:class =>"thumb") if product.photo? %>
+        <%= link_to(product.name,group_product_path(product.group_id,product)) %>
+        <% if user_signed_in? && @group.editable_by?(current_user) %>
+          <%= link_to("修改",edit_group_product_path(product.group_id,product),:class => "btn btn-default btn-xs") %>      
+        <% end %>     
+
+        <p><%= product.snippet %></p>
+        
+      </li>
+      <% end %>
+    </ul>
   </div>
 </div>

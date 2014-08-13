@@ -63,7 +63,7 @@ class ProductsController < ApplicationController
   end
   private
     def product_params
-      params.require(:product).permit(:name,:cost,:price,:number,:bargain,:special)
+      params.require(:product).permit(:name,:cost,:price,:number,:bargain,:special,:photo,:snippet,:description)
     end
 
     def find_group

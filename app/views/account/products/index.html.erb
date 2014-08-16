@@ -1,34 +1,43 @@
-<%= render 'js/app.js' %>
+
 <div class="row">
   <h1>購物車內容</h1>
   <div class="col-md-10 col-md-offset-1" >
-    <table class="table" ng-init>
-      <thead><tr><th>#</th><th>商品名稱</th><th>價格</th><th>數量</th><th>小計</th></tr></thead>
-      <% @products.each_with_index do |product, i| %>
-      
-        <tr>
-          <td><%= i+1 %></td>
-          <td><%= product.name %></td>
-          
-          <td >
-            <% if product.bargain == 0 %>
-            <%= product.price %>
-            <span id="price<%=i%>" style="display:none"><%= product.price %></span>
-            <% else %>
-            <s><%= product.price %></s> > <strong><%= product.bargain %></strong>
-            <span id="price<%=i%>" style="display:none"><%= product.bargain %></span>
-            <% end %>
-          </td>
-          <td></td> 
-          <td></td>
-        </tr>
-      <% end %>
-    </table>
-    <p class="pull-right">
-      合計：<span id="total"> </span>
-      <%= link_to('結帳','#', :class => "btn btn-primary btn-xs") %>
-      <%= link_to('清空購物車',account_product_path(1), :class => "btn btn-default btn-xs", method: :delete) %>
-    </p>
-
+    <%= simple_form_for([@group,@product], html: {class: 'form-horizontal',:multipart => true }) do |f| %>
+      <table class="table table-hover">
+        <thead><tr><th>#</th><th></th><th>商品名稱</th><th>數量</th><th>小計</th></tr></thead>
+        <% @products.each_with_index do |product, i| %>
+          <tr>
+            <td><%= i+1 %></td>
+            <td><%=link_to(image_tag(product.photo.thumb.url) ,group_product_path(product.group_id,product),:class =>"thumb") if product.photo? %></td>
+            <td>
+              <h4>
+                <em><%= product.name %></em>
+                <small>
+                  <% if product.bargain == 0 %>
+                  <%= product.price %>
+                  <span id="price<%=i%>" style="display:none"><%= product.price %></span>
+                  <% else %>
+                  <s><%= product.price %></s> > <strong><%= product.bargain %></strong>
+                  <span id="price<%=i%>" style="display:none"><%= product.bargain %></span>
+                  <% end %>
+                </small>
+              </h4>
+              <p><%= product.snippet %></p>
+            </td>
+            
+            <td >
+              
+            </td>
+            <td></td> 
+            <td></td>
+          </tr>
+        <% end %>
+      </table>
+      <p class="pull-right">
+        合計：<span id="total"> </span>
+        <%= link_to('結帳','#', :class => "btn btn-primary btn-xs") %>
+        <%= link_to('清空購物車',account_product_path(1), :class => "btn btn-default btn-xs", method: :delete) %>
+      </p>
+    <% end %>
   </div>
 </div>

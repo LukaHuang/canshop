@@ -26,6 +26,7 @@ group :development, :test do
   gem "better_errors"
   gem "binding_of_caller"
   gem "pry-rails"
+  gem "annotate"
 end
 group :test do
   gem 'selenium-webdriver', '2.35.1'
@@ -36,20 +37,24 @@ group :production do
   gem 'rails_12factor'
 end
 
-
+#設定檔
 gem "settingslogic"
+#SEO
+gem "seo_helper", "~> 1.0.2"
 gem "open_graph_helper"
+#使用者、權限、管理
 gem 'devise'
 gem 'rolify'
 gem 'rails_admin'
 gem 'cancan'
-gem "seo_helper", "~> 1.0.2"
+
+
 gem 'bootstrap-sass'
 gem 'holder_rails'
 gem 'bcrypt-ruby'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem "simple_form"
-gem 'angularjs-rails'
+#圖片上傳
 gem 'carrierwave'
 gem 'mini_magick'

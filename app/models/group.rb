@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: groups
+#
+#  id          :integer          not null, primary key
+#  title       :string(255)
+#  description :text
+#  created_at  :datetime
+#  updated_at  :datetime
+#  user_id     :integer
+#
+
 class Group < ActiveRecord::Base
 
   belongs_to :admin, :class_name => "User", :foreign_key => :user_id

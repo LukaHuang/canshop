@@ -23,17 +23,19 @@
             <p><%= product.snippet %></p>
           </td>
           <td >
-            <form class="form-horizontal" role="form" id="form<%= i%>">
+            
+            <%= form_tag "#",method: :put ,:class=> "form-horizontal" do %>
               <input type="hidden" name="up_id" value="<%= @up[i].id %>">
+              <input type="hidden" name="price" id="price<%= i %>" value="<%= @price %>">
               <select name="amount" id="amount<%= i%>" class="form-control">
                 <% (1..product.number).each do |pn|  %>
-                  <option value="<%= @price * pn %>"><%= pn %></option>
+                  <option value="<%=  pn %>"><%= pn %></option>
                   <% if pn > 11 then %>
                     <% break %>
                   <% end %>
                 <% end %>
               </select>
-            </form>
+            <% end %>
           </td>
           <td id="count<%=i%>"><%= @price %> </td>
           <td>
@@ -49,7 +51,6 @@
     </table>
     <div>
       <p class="pull-right ">
-        
         <%= link_to('結帳',"#", :class => "btn btn-primary ") %>
         <%= link_to('清空購物車',account_product_path(1), :class => "btn btn-default ", method: :delete) %>
       </p>
@@ -62,18 +63,30 @@
     $('select').change(function(){
       total=0;
       amount=$(this).val();
+      
+      $form=$(this).parent();
+      url="/account/products/"+$form.find("[name='up_id']").val();
+      console.log(url);
       $.each($('select'),function(index, element){
-        count="#count"+index
-        $(count).html($(element).val());
-        total+= Number($(element).val());
+        count=Number($(element).val()* $("#price"+index).val());
+        $("#count"+index).html(count);
+        total+=count;
       });
       $('#total').html(total);
-
+      console.log($form.serialize());
+      $.ajax({
+        url: url,
+        type: 'put',
+        data: $form.serialize(),
+      })
+      .done(function(data) {
+        console.log(data);
+      })
+      .fail(function(data) {
+        console.log(data);
+      });
+      
     });
-    $('form').submit(function(event) {
-      var $form = $(this);
-      var $submit = $form.find("input[type=submit]");
-      return false;
-    });
+    
   })
 </script>

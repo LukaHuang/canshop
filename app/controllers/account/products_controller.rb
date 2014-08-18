@@ -15,6 +15,16 @@ class Account::ProductsController < ApplicationController
   end
   def update
     @user_products = UserProduct.find(params[:id])
+
+    respond_to do |format|
+      #if @user_products.amount(up_params)
+
+      #else
+
+      #end
+    
+      format.json { render json:@user_products, status: :ok }
+    end
     #respond_to do |format|
     #  format.json {render json :@user_products}
     #  if @user_products.update(user_products_params)
@@ -28,7 +38,7 @@ class Account::ProductsController < ApplicationController
     #    format.json { render json: @user_products.errors, status: :unprocessable_entity }
     #  end
     #end
-    redirect_to account_products_path
+    #redirect_to account_products_path
   end
   def destroy
     current_user.user_products.destroy_all
@@ -36,7 +46,7 @@ class Account::ProductsController < ApplicationController
     redirect_to account_products_path
   end
   private
-    def user_products_params
-      params.require(:user_product).permit(:product_id, :amount)
+    def up_params
+      params.require(:products).permit(:amount)
     end
 end

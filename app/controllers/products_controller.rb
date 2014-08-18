@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
     else
       flash[:warning]= "此商品已經在購物車囉！"
     end
-    redirect_to group_product_path(@group,@product)
+    redirect_to :back
   end
   def not_like
     @product = Product.find(params[:id])
@@ -53,7 +53,7 @@ class ProductsController < ApplicationController
     else
       flash[:warning]= "此商品沒有在購物車哦！"
     end
-    redirect_to group_product_path(@group,@product)
+    redirect_to :back
   end
   def bargain
     @products=Product.where('bargain > 0')

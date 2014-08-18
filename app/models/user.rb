@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :join_group, :through => :group_users, :source => :group
   has_many :user_products , dependent: :destroy
   has_many :cart, :through => :user_products, :source => :product
+  has_many :orders
   after_create :assign_default_role
   def join!(group)
     join_group << group
@@ -21,7 +22,7 @@ class User < ActiveRecord::Base
     join_group.include?(group)
   end
   def want!(product)
-    cacart << product
+    cart << product
   end
   def not_like!(product)
     cart.delete(product)

@@ -8,11 +8,7 @@ class Account::ProductsController < ApplicationController
 
   end
   def destroy
-    #UserProduct.destroy_all(:user_id => current_user)
-    current_user.cart.find_each do |up|
-      up.destroy
-    end
-
+    current_user.user_products.destroy_all
     flash[:warning]= "購物車已清空"
     redirect_to account_products_path
   end

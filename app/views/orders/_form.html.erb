@@ -1,21 +1,17 @@
 <%= simple_form_for(@order,:html => {:class => "form-horizontal" }) do |f| %>
   <%= f.error_notification %>
+
+    <%= f.input :address,label: '地址' , input_html: { class: 'form-control' },wrapper_html: { class: 'form-group  col-sm-8'},label_html: { class: 'col-sm-2' } %>
+
+  
   <div class="form-group">
-    <%= f.label "地址", :class => "col-sm-2", :for => "order_address"  %>
     <div class="col-sm-8">
-      <%= f.input_field :address, :class =>  "form-control" %>
+      <%= f.input :pay_type,label: '付款方式' , collection: [ ["信用卡","信用卡"], ["貨到付款","貨到付款"], ["銀行轉帳","銀行轉帳"]] , :label_method => :last, :value_method => :first,:as => :radio_buttons, :item_wrapper_class => 'radio-inline',:checked => true %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label "付款方式", :class => "col-sm-2", :for => "order_pay_type"  %>
     <div class="col-sm-8">
-      <%= f.input_field :pay_type , collection: [ ["信用卡","信用卡"], ["貨到付款","貨到付款"], ["銀行轉帳","銀行轉帳"]] , :label_method => :last, :value_method => :first,:as => :radio_buttons, :item_wrapper_class => 'radio-inline',:checked => true %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label "取貨方式", :class => "col-sm-2", :for => "order_get_type"  %>
-    <div class="col-sm-8">
-      <%= f.input_field :get_type, :collection => [ ["到店自取","到店自取"], ["郵寄","郵寄"]], :label_method => :last, :value_method => :first,:as => :radio_buttons, :item_wrapper_class => 'radio-inline',:checked => true %>
+      <%= f.input :get_type,label:'取貨方式', :collection => [ ["到店自取","到店自取"], ["郵寄","郵寄"]], :label_method => :last, :value_method => :first,:as => :radio_buttons, :item_wrapper_class => 'radio-inline',:checked => true %>
     </div>
   </div>
   <div class="form-actions col-md-offset-2">

@@ -12,5 +12,9 @@
 #
 
 class Order < ActiveRecord::Base
-  belongs_to :users
+  belongs_to :customer, :class_name => "User", :foreign_key => :user_id
+  validates :pay_type, :presence => true
+  validates :get_type, :presence => true
+  validates :address, :presence => true
+
 end

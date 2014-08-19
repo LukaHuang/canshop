@@ -1,20 +1,14 @@
-<%= simple_form_for(@order,:html => {:class => "form-horizontal" }) do |f| %>
+<%= simple_form_for @order, html: { class: 'form-horizontal' },
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
   <%= f.error_notification %>
-
-    <%= f.input :address,label: '地址' , input_html: { class: 'form-control' },wrapper_html: { class: 'form-group  col-sm-8'},label_html: { class: 'col-sm-2' } %>
-
-  
-  <div class="form-group">
-    <div class="col-sm-8">
-      <%= f.input :pay_type,label: '付款方式' , collection: [ ["信用卡","信用卡"], ["貨到付款","貨到付款"], ["銀行轉帳","銀行轉帳"]] , :label_method => :last, :value_method => :first,:as => :radio_buttons, :item_wrapper_class => 'radio-inline',:checked => true %>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-8">
-      <%= f.input :get_type,label:'取貨方式', :collection => [ ["到店自取","到店自取"], ["郵寄","郵寄"]], :label_method => :last, :value_method => :first,:as => :radio_buttons, :item_wrapper_class => 'radio-inline',:checked => true %>
-    </div>
-  </div>
-  <div class="form-actions col-md-offset-2">
-    <%= f.submit "確認", :disable_with => '處理中....', :class => "btn btn-primary btn-lg " %>
-  </div>
+  <%=  f.input :address,label: '地址', placeholder: '請輸入您的地址' %>
+  <%= f.input :pay_type,label: '付款方式' , collection: [ ["信用卡","信用卡"], ["貨到付款","貨到付款"], ["銀行轉帳","銀行轉帳"]] , :label_method => :last, :value_method => :first,:as => :radio_buttons, :item_wrapper_class => 'radio-inline',:checked => true %>
+  <%= f.input :get_type,label:'取貨方式', :collection => [ ["到店自取","到店自取"], ["郵寄","郵寄"]], :label_method => :last, :value_method => :first,:as => :radio_buttons, :item_wrapper_class => 'radio-inline',:checked => true %>
+  <%= f.submit "確認", :disable_with => '處理中....', :class => "btn btn-primary btn-lg " %>
 <% end %>

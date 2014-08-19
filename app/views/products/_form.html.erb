@@ -1,69 +1,27 @@
-<%= simple_form_for([@group,@product], html: {class: 'form-horizontal',:multipart => true  }) do |f| %>
-    <div class="form-group">
-
-      <%= f.label "商品名稱", :class => "col-sm-2", :for => "product_name"  %>
-      <div class="col-sm-8">
-        <%= f.input_field :name, :class =>  "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label "簡介", :class => "col-sm-2", :for => "product_snippet"  %>
-      <div class="col-sm-8">
-        <%= f.input_field :snippet, :class =>  "form-control",:row => 4 %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label "詳細說明", :class => "col-sm-2", :for => "product_description"  %>
-      <div class="col-sm-8">
-        <%= f.input_field :description, :class =>  "form-control",:row => 4 %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label "價格", :class => "col-sm-2", :for => "product_price"  %>
-      <div class="col-sm-3">
-        <%= f.input_field :price, :class =>  "form-control" %>
-      </div>
-      <%= f.label "成本", :class => "col-sm-2", :for => "product_cost"  %>
-      <div class="col-sm-3">
-        <%= f.input_field :cost, :class =>  "form-control" %>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <%= f.label "數量", :class => "col-sm-2", :for => "product_number"  %>
-      <div class="col-sm-3">
-        <%= f.input_field :number, :class =>  "form-control" %>
-      </div>
-      <%= f.label "特價", :class => "col-sm-2", :for => "product_bargain"  %>
-      <div class="col-sm-3">
-        <%= f.input_field :bargain, :class =>  "form-control" %>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">    
-        <div class="checkbox">
-            <%= f.input :special, as: :boolean, inline_label: '精選', label: false %>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label "圖片", :class => "col-sm-2", :for => "product_photo"  %>
-      <div class="col-sm-8">
-        <%= f.file_field :photo %>
-        <%= f.hidden_field :photo_cache %>
-        <%= image_tag(@product.photo.thumb.url) if @product.photo? %>  
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">  
-        <div class="checkbox">
-            <%= f.input :remove_photo, as: :boolean, inline_label: '刪除圖片', label: false %>
-        </div>
-      </div>
-    </div>
-    
-    <div class="form-actions col-md-offset-2">
-      <%= f.submit "確認", :disable_with => '處理中....', :class => "btn btn-primary btn-lg " %>
-    </div>
-    <% end %>
+<%= simple_form_for [@group,@product], html: { class: 'form-horizontal' },
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :name, label: '產品名稱' %>
+  <%= f.input :snippet,label: '簡介',:row => 4 %>
+  <%= f.input :description ,label: '詳細說明',:row => 4 %>
+  <%= f.input :price,label:'價格' %>
+  <%= f.input :bargain,label:'特價' %>
+  <%= f.input :special, as: :boolean, inline_label: '精選' %>
+  <%= f.input :cost,label:'成本' %>
+  <%= f.input :number,label:'存量' %>
+  <%= f.input :photo,label: '產品圖片' %>
+  <%= f.hidden_field :photo_cache %>
+  <div class="col-md-offset-2 col-sm-3">
+    <%= image_tag(@product.photo.thumb.url) if @product.photo? %>  
+    <%= f.input :remove_photo, as: :boolean, inline_label: '刪除圖片' %>
+  </div>
+  <div class="form-actions col-md-offset-2">
+    <%= f.submit "確認", :disable_with => '處理中....', :class => "btn btn-primary btn-lg " %>
+  </div>
+<% end %>

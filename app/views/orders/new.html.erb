@@ -1,5 +1,34 @@
-<h1>New order</h1>
+<div class="row">
 
-<%= render 'form' %>
+  <h1>確認您的訂單名細</h1>
+  <div class="col-md-10 col-md-offset-1" >
+    <table class="table">
+      <thead><tr><th>#</th><th style="width: 60%">商品名稱</th><th>數量</th><th>小計</th></tr></thead>
+      <% @total =0 %>
+      <% @products.each_with_index do |product, i| %>
+        <tr>
+          <td><%= i+1 %></td>
+          <td>
+            <h4>
+              <em><%= product.name %></em>
+              <small>
+                <% if product.bargain == 0 %>
+                  <%= @price=product.price %>
+                <% else %>
+                  <s><%= product.price %></s> > <strong><%= @price=product.bargain %></strong>
+                <% end %>
+                <% @total = (@price * @up[i].amount) + @total %>
+              </small>
+            </h4>
+            
+          </td>
+          <td><%= @up[i].amount %></td>
+          <td><%= @price* @up[i].amount %> </td>
+        </tr>
+      <% end %>
+      <tr><td></td><td ></td><td class="text-right">合計</td><td><%=@total%></td></tr>
 
-<%= link_to 'Back', orders_path %>
+    </table>
+    <%= render 'form' %>
+  </div>
+</div>

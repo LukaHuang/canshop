@@ -14,7 +14,10 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @order = Order.new
+    @user=current_user
+    @order = @user.orders.build
+    @products = current_user.cart
+    @up =current_user.user_products
   end
 
   # GET /orders/1/edit
@@ -69,6 +72,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:user_id, :address, :pay_status, :pay_type)
+      params.require(:order).permit(:address, :pay_type)
     end
 end

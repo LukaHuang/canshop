@@ -1,0 +1,25 @@
+<div class="row">
+  <h1>產品列表</h1>
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-hover">
+      <thead><tr><th>商品名稱</th><th>價格</th><th>特價</th><th>精選</th><th>存貨</th><th>成本</th><th></th><th></th></tr></thead>
+      <tbody>
+        <% @products.each_with_index do |product,i| %>
+          <tr>
+            <td><%= i+1 %></td>
+            <td><%= product.name %></td>
+            <td><%= product.price %></td>
+            <td><%= (product.bargain>0) ? product.bargain : "" %></td>
+            <td><%= (product.special) ? "\u2713" : "\u2718"  %></td>
+            <td><%= product.number %></td>
+            <td><%= product.cost %></td>
+            <td><%= link_to("查看",group_product_path(product.group_id,product),:class => "btn btn-default btn-xs") %></td>
+            <td>
+              <%= link_to("修改",edit_group_product_path(product.group_id,product),:class => "btn btn-default btn-xs") %>      
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

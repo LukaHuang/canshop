@@ -13,11 +13,18 @@ Rails.application.routes.draw do
       end
     end
   end
+  get 'products/bargain' => 'products#bargain', as: :bargain
+  get 'products/special' => 'products#special', as: :special
   namespace :account do
     resources :products
   end
-  get 'products/bargain' => 'products#bargain', as: :bargain
-  get 'products/special' => 'products#special', as: :special
+  resources :staffs,:only =>[:index] do
+    collection do
+      get :product_list
+      get :order_list
+    end
+  end
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

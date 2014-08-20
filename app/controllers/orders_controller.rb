@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  authorize_resource
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   # GET /orders

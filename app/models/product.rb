@@ -25,7 +25,7 @@ class Product < ActiveRecord::Base
   has_many :beneed, :through => :user_products, :source => :user
   mount_uploader :photo, ProductUploader
   validates :name, :presence => true
-  
+  default_scope -> { order('name ASC') }
   def editable_by?
     user && user == owner
   end

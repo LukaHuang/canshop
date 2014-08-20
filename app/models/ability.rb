@@ -24,6 +24,7 @@ class Ability
         can :not_like, Product
         can :bargain, Product
         can :special, Product
+        can :manage ,Order  
     end
     # Define abilities for the passed in user here. For example:
     #

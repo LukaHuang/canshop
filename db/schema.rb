@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140818023617) do
+ActiveRecord::Schema.define(version: 20140820101946) do
 
   create_table "group_users", force: true do |t|
     t.integer  "group_id"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20140818023617) do
     t.string   "get_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status",     default: "待確認"
+    t.text     "extra"
   end
 
   create_table "products", force: true do |t|

@@ -42,9 +42,9 @@
           </td>
           <td id="count<%=i%>"><%= @price %> </td>
           <td>
-            <% if !current_user.is_want?(product,@products) %>
-              <%= link_to('不想買了',not_like_group_product_path(product.group_id,product),:method => "post") %>
-            <% end %>
+           
+            <%= link_to('不想買了',not_like_group_product_path(product.group_id,product),:method => "post") %>
+            
           </td>
         </tr>
 

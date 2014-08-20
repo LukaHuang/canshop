@@ -17,5 +17,5 @@ class Order < ActiveRecord::Base
   validates :pay_type, :presence => true
   validates :get_type, :presence => true
   validates :address, :presence => true
-
+  default_scope -> { order('created_at DESC') }
 end

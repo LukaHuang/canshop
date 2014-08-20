@@ -14,20 +14,6 @@ class Account::ProductsController < ApplicationController
       @user_products.save
       format.json { render json:@user_products, status: :ok }
     end
-    #respond_to do |format|
-    #  format.json {render json :@user_products}
-    #  if @user_products.update(user_products_params)
-    #    params[:product_id][''].each do |p|
-    #      @post_attachment = @post.post_attachments.create!(:avatar => a, :post_id => @post.id)
-    #    end
-        #format.html { redirect_to @user_products, notice: 'user_products was successfully updated.' }
-        #format.json { render :show, status: :ok, location: @user_products }
-    #  else
-    #    format.html { render :index }
-    #    format.json { render json: @user_products.errors, status: :unprocessable_entity }
-    #  end
-    #end
-    #redirect_to account_products_path
   end
   def destroy
     current_user.user_products.where(user_products:{order_id:nil}).destroy_all

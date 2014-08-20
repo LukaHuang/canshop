@@ -3,12 +3,12 @@ class ProductsController < ApplicationController
   before_action :find_group, :except => [:show,:index,:bargain,:special]
   before_action :authenticate_user!, :except => [:show,:index,:bargain,:special]
   before_action :member_required ,:only => [:new,:create]
+  before_action :find_cart, :only=>[:show,:want,:not_like,:bargain,:special]
   def index
     @products =Product.all
   end
   def show
     @product = Product.find(params[:id])
-    @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
   end
   def new
     @product = @group.products.build
@@ -40,7 +40,6 @@ class ProductsController < ApplicationController
   end
   def want
     @product = Product.find(params[:id])
-    @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
     if !current_user.is_want?(@product,@cart)
       up=current_user.user_products.build
       up.product_id=@product.id
@@ -52,7 +51,6 @@ class ProductsController < ApplicationController
   end
   def not_like
     @product = Product.find(params[:id])
-    @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
     if current_user.is_want?(@product,@cart)
       UserProduct.where(user_id:current_user,order_id:nil,product_id:@product.id).destroy_all
     else
@@ -62,17 +60,17 @@ class ProductsController < ApplicationController
   end
   def bargain
     @products=Product.where('bargain > 0')
-    @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
   end
   def special
     @products=Product.where('special is true')
-    @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
   end
   private
     def product_params
       params.require(:product).permit(:name,:cost,:price,:number,:bargain,:special,:photo,:snippet,:description)
     end
-
+    def find_cart
+      @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
+    end
     def find_group
       @group = Group.find(params[:group_id])
     end

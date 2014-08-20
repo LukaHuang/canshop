@@ -18,14 +18,14 @@ class OrdersController < ApplicationController
   def new
     
     @order = current_user.orders.build
-    @products = Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:@order})
+    @products = Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
     @up =current_user.user_products.where(order_id:nil)
   end
 
   # POST /orders
   # POST /orders.json
   def create
-    @products = Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:@order})
+    @products = Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
     @up =current_user.user_products.where(order_id:nil)
     @order =current_user.orders.build(order_params)
 

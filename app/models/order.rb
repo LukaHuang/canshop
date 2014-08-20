@@ -13,6 +13,7 @@
 
 class Order < ActiveRecord::Base
   belongs_to :customer, :class_name => "User", :foreign_key => :user_id
+  has_many :user_products , dependent: :destroy
   validates :pay_type, :presence => true
   validates :get_type, :presence => true
   validates :address, :presence => true

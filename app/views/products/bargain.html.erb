@@ -10,10 +10,12 @@
             <td><s><%= product.price %></s> > <strong><%= product.bargain %></strong></td>
             <td><%= product.number %></td>
             <td>
-            <% if user_signed_in? && current_user.is_want?(product) %>
+            <% if user_signed_in? && current_user.is_want?(product,@cart) %>
             <%= link_to("不買這個了",not_like_group_product_path(product.group_id,product), :method => :post) %> </td>
-            <% else %>
+            <% elsif product.number >0 %>
             <%= link_to("我想買",want_group_product_path(product.group_id,product), :method => :post) %> </td>
+            <% else %>
+            <p>已售完</p>
             <% end %>
           </tr>
         <% end %>

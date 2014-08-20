@@ -3,26 +3,15 @@ class Account::ProductsController < ApplicationController
   before_action :authenticate_user!
   respond_to :json
   def index
-    @products = current_user.cart
-    @up =current_user.user_products
-  end
-  def show
-    @cart = current_user.cart
-    respond_to do |format|
-      format.html
-      format.json { render json: @cart}
-    end
+    @products = Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
+    @up =current_user.user_products.where(order_id:nil)
   end
   def update
     @user_products = UserProduct.find(params[:id])
-
-    respond_to do |format|
-      #if @user_products.amount(up_params)
-
-      #else
-
-      #end
     
+    respond_to do |format|
+      @user_products.amount=params[:amount]
+      @user_products.save
       format.json { render json:@user_products, status: :ok }
     end
     #respond_to do |format|
@@ -41,12 +30,12 @@ class Account::ProductsController < ApplicationController
     #redirect_to account_products_path
   end
   def destroy
-    current_user.user_products.destroy_all
+    current_user.user_products.where(user_products:{order_id:nil}).destroy_all
     flash[:warning]= "購物車已清空"
     redirect_to account_products_path
   end
   private
     def up_params
-      params.require(:products).permit(:amount)
+      params.require(:user_products).permit(:amount)
     end
 end

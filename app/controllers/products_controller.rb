@@ -8,6 +8,7 @@ class ProductsController < ApplicationController
   end
   def show
     @product = Product.find(params[:id])
+    @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
   end
   def new
     @product = @group.products.build
@@ -39,8 +40,11 @@ class ProductsController < ApplicationController
   end
   def want
     @product = Product.find(params[:id])
-    if !current_user.is_want?(@product)
-      current_user.want!(@product)
+    @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
+    if !current_user.is_want?(@product,@cart)
+      up=current_user.user_products.build
+      up.product_id=@product.id
+      up.save
     else
       flash[:warning]= "此商品已經在購物車囉！"
     end
@@ -48,8 +52,9 @@ class ProductsController < ApplicationController
   end
   def not_like
     @product = Product.find(params[:id])
-    if current_user.is_want?(@product)
-      current_user.not_like!(@product)
+    @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
+    if current_user.is_want?(@product,@cart)
+      UserProduct.where(user_id:current_user,order_id:nil,product_id:@product.id).destroy_all
     else
       flash[:warning]= "此商品沒有在購物車哦！"
     end
@@ -57,9 +62,11 @@ class ProductsController < ApplicationController
   end
   def bargain
     @products=Product.where('bargain > 0')
+    @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
   end
   def special
     @products=Product.where('special is true')
+    @cart=Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
   end
   private
     def product_params

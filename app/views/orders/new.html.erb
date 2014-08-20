@@ -6,6 +6,9 @@
       <thead><tr><th>#</th><th style="width: 60%">商品名稱</th><th>數量</th><th>小計</th></tr></thead>
       <% @total =0 %>
       <% @products.each_with_index do |product, i| %>
+        <% if @up[i].order_id != nil %>
+          <% next %>
+        <% end %>
         <tr>
           <td><%= i+1 %></td>
           <td>

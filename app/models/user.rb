@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   has_many :group_users
   has_many :join_group, :through => :group_users, :source => :group
   has_many :user_products , dependent: :destroy
-  has_many :cart, :through => :user_products, :source => :product
+  #has_many :cart, :through => :user_products, :source => :product
   has_many :orders
   after_create :assign_default_role
   def join!(group)
@@ -44,13 +44,7 @@ class User < ActiveRecord::Base
   def is_member_of?(group)
     join_group.include?(group)
   end
-  def want!(product)
-    cart << product
-  end
-  def not_like!(product)
-    cart.delete(product)
-  end
-  def is_want?(product)
+  def is_want?(product,cart)
     cart.include?(product)
   end
   def active_for_authentication? 

@@ -4,10 +4,12 @@
   </div>
   <h1><%= @product.name %></h1>
   <p><%= @product.description %></p>
-  <% if !current_user.is_want?(@product) %>
+  <% if current_user.is_want?(@product,@cart)  %>
+    <%= link_to('不想買了',not_like_group_product_path(@product.group_id,@product),:method => "post") %>
+  <% elsif @product.number >0 %>
     <%= link_to('我想買',want_group_product_path(@product.group_id,@product),:method => "post") %>
   <% else %>
-  <%= link_to('不想買了',not_like_group_product_path(@product.group_id,@product),:method => "post") %>
+    <p>已售完</p> 
   <% end %>
 
 </div>

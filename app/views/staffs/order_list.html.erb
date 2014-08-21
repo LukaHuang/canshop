@@ -21,7 +21,7 @@
             <td><%= order.pay_status %></td>
             <td><%= order.pay_type %></td>
             <td><%= order.get_type %></td>
-            <td><%= order.status %></td>
+            <td><%= order.status %><small>(<%= get_status(order.status) %>%)</small></td>
             <td><%= link_to '查看', order %></td>
             <td><%= link_to '修改', edit_order_path(order) %></td>
             <td><%= link_to '取消', order, method: :delete, data: { confirm: '取消訂單?' } %></td>

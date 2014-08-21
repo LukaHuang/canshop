@@ -20,6 +20,7 @@ class Ability
   protected
     def basic_read_only
         can :read, :all
+        can :destroy, [Account, Product]
         can :want, Product
         can :not_like, Product
         can :bargain, Product

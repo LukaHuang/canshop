@@ -1,6 +1,21 @@
 <div class="row">
   <h1>訂單名細</h1>
+
   <div class="col-md-10 col-md-offset-1" >
+    <p>
+      <strong>商品狀態:</strong>
+
+      <% @percent=get_status(@order.status) %>
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-striped active" aria-valuemax="100" style="width: <%= @percent %>%">
+          <%= @order.status %>
+          <span class="sr-only">40% Complete</span>
+        </div>
+        <div class="progress-bar progress-bar-info" style="width: <%= 100-@percent %>%">
+          <span class="sr-only">  </span>
+        </div>
+      </div>
+    </p>
     <table class="table">
       <thead><tr><th>#</th><th style="width: 60%">商品名稱</th><th>數量</th><th>小計</th></tr></thead>
       <% @total =0 %>
@@ -47,6 +62,7 @@
     <strong>取貨方式:</strong>
     <%= @order.get_type %>
   </p>
+  
 
   <%= link_to 'Back', orders_path %>
   </div>

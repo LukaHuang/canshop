@@ -11,8 +11,9 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    @user= (current_user.has_role?(:admin)) ? User.find(@order.user_id) : current_user
     @products = Product.joins(:user_products).where(user_products:{order_id:@order})
-    @up =current_user.user_products.where(order_id:@order)
+    @up =@user.user_products.where(order_id:@order)
   end
 
   # GET /orders/new
@@ -49,6 +50,9 @@ class OrdersController < ApplicationController
   end
   # GET /orders/1/edit
   def edit
+    @user= (current_user.has_role?(:admin)) ? User.find(@order.user_id) : current_user
+    @products = Product.joins(:user_products).where(user_products:{order_id:@order})
+    @up =@user.user_products.where(order_id:@order)
   end
 
   # PATCH/PUT /orders/1
@@ -88,6 +92,10 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:address, :pay_type,:get_type)
+      if current_user.has_role?(:admin)
+        params.require(:order).permit(:address, :pay_type,:get_type,:extra,:status,:pay_status)
+      else
+        params.require(:order).permit(:address, :pay_type,:get_type,:extra)
+      end
     end
 end

@@ -5,9 +5,6 @@
       <thead><tr><th>#</th><th style="width: 15%"></th><th style="width: 60%">商品名稱</th><th>數量</th><th>小計</th><th></th></tr></thead>
       <% @total =0 %>
       <% @products.each_with_index do |product, i| %>
-        <% if @up[i].order_id != nil %>
-          <% next %>
-        <% end %>
         <tr>
           <td><%= i+1 %></td>
           <td><%=link_to(image_tag(product.photo.thumb.url) ,group_product_path(product.group_id,product),:class =>"thumb") if product.photo? %></td>
@@ -28,7 +25,7 @@
           <td >
             
             <%= form_tag "#",method: :put ,:class=> "form-horizontal" do %>
-              <input type="hidden" name="up_id" value="<%= @up[i].id %>">
+              <input type="hidden" name="up_id" value="<%= product.up_id %>">
               <input type="hidden" name="price" id="price<%= i %>" value="<%= @price %>">
               <select name="amount" d_i="<%= i %>" id="amount<%= i%>" class="form-control">
                 <% (1..product.number).each do |pn|  %>

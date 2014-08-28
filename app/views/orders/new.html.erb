@@ -1,5 +1,4 @@
 <div class="row">
-
   <h1>確認您的訂單名細</h1>
   <div class="col-md-10 col-md-offset-1" >
     <table class="table">
@@ -17,13 +16,13 @@
                 <% else %>
                   <s><%= product.price %></s> > <strong><%= @price=product.bargain %></strong>
                 <% end %>
-                <% @total = (@price * @up[i].amount) + @total %>
+                <% @total = (@price * product.amount) + @total %>
               </small>
             </h4>
             
           </td>
-          <td><%= @up[i].amount %></td>
-          <td><%= @price* @up[i].amount %> </td>
+          <td><%= product.amount %></td>
+          <td><%= @price* product.amount %> </td>
         </tr>
       <% end %>
       <tr><td></td><td ></td><td class="text-right">合計</td><td><%=@total%></td></tr>

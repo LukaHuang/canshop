@@ -12,24 +12,20 @@ class OrdersController < ApplicationController
   # GET /orders/1.json
   def show
     @user= (current_user.has_role?(:admin)) ? User.find(@order.user_id) : current_user
-    @products = Product.joins(:user_products).where(user_products:{order_id:@order})
-    @up =@user.user_products.where(order_id:@order)
+    @products = Product.from('user_products AS up').joins('INNER JOIN products AS p ON p.id = up.product_id').where('up.user_id = ? AND up.order_id = ?' ,@user,@order).select('p.* , up.amount AS amount,up.user_id as user')
   end
 
   # GET /orders/new
   def new
-    
     @order = current_user.orders.build
-    @products = Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
-    @up =current_user.user_products.where(order_id:nil)
+    @products = Product.from('user_products AS up').joins('INNER JOIN products AS p ON p.id = up.product_id').where('up.user_id = ? AND up.order_id is ?' ,current_user,nil).select('p.* , up.amount AS amount,up.user_id as user')
   end
 
   # POST /orders
   # POST /orders.json
   def create
-    @products = Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
-    @up =current_user.user_products.where(order_id:nil)
-    @order =current_user.orders.build(order_params)
+    @products = Product.from('user_products AS up').joins('INNER JOIN products AS p ON p.id = up.product_id').where('up.user_id = ? AND up.order_id is NULL' ,@user).select('p.* , up.amount AS amount,up.user_id as user')
+    @products = Product.from('user_products AS up').joins('INNER JOIN products AS p ON p.id = up.product_id').where('up.user_id = ? AND up.order_id is ?' ,current_user,nil).select('p.* , up.amount AS amount,up.user_id as user')
 
     respond_to do |format|
       if @order.save
@@ -51,8 +47,7 @@ class OrdersController < ApplicationController
   # GET /orders/1/edit
   def edit
     @user= (current_user.has_role?(:admin)) ? User.find(@order.user_id) : current_user
-    @products = Product.joins(:user_products).where(user_products:{order_id:@order})
-    @up =@user.user_products.where(order_id:@order)
+    @products = Product.from('user_products AS up').joins('INNER JOIN products AS p ON p.id = up.product_id').where('up.user_id = ? AND up.order_id = ?' ,@user,@order).select('p.* , up.amount AS amount,up.user_id as user')
   end
 
   # PATCH/PUT /orders/1

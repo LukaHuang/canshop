@@ -3,8 +3,8 @@ class Account::ProductsController < ApplicationController
   before_action :authenticate_user!
   respond_to :json
   def index
-    @products = Product.joins(:user_products).where(user_products:{user_id:current_user,order_id:nil})
-    @up =current_user.user_products.where(order_id:nil)
+    @products = Product.from('user_products AS up').joins('INNER JOIN products AS p ON p.id = up.product_id').where('up.user_id = ? AND up.order_id is ?' ,current_user,nil).select('p.* , up.amount AS amount,up.user_id as user,up.id as up_id')
+
   end
   def update
     @user_products = UserProduct.find(params[:id])
